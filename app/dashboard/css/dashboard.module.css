@@ -1,0 +1,214 @@
+/* Main dashboard container */
+.dashboardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    background: #f5f7fa;
+}
+.dashboardContainer .ring i {
+    position: absolute;
+    top: 10px;
+    right: 32px;
+    font-size: 2rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+    transition: 0.5s;
+}
+.dashboardContainer i:hover {
+    color: #333;
+    animation: ring 0.8s 1;
+    transition: color 0.2s;
+}
+@keyframes ring {
+    0% {
+        transform: rotate(0);
+    }
+    15% {
+        transform: rotate(20deg);
+    }
+    30% {
+        transform: rotate(-15deg);
+    }
+    45% {
+        transform: rotate(10deg);
+    }
+    60% {
+        transform: rotate(-5deg);
+    }
+    75% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Card image at the top */
+.cardWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.img {
+    width: 500px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    background: #fff;
+}
+
+/* Foundation bar under the card */
+.foundation {
+    width: 250px;
+    height: 18px;
+    border-top: 5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    margin: 12px 0 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+.foundation span{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #00cd11;
+    text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+}
+.foundation span::before{
+    content: "Balance: ";
+    color: black;
+}
+
+/* Body content area under the foundation */
+.bodyContentWrapper {
+    width: 100%;
+    margin-top: 32px;
+    padding-top: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+
+.toggleContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+
+.toggleButton {
+  background: #e3eafc;
+  color: #1a237e;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.toggleButton:hover {
+  background: #c5cae9;
+}
+
+.active {
+  background: #357abd !important;
+  color: #fff !important;
+}
+
+.swalAccept {
+  background-color: #388e3c !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px 24px;
+  border: none;
+  font-size: 1em;
+  margin: 0 8px;
+  box-shadow: 0 2px 8px rgba(56,142,60,0.15);
+  transition: background 0.2s;
+}
+.swalAccept:hover {
+  background-color: #2e7031 !important;
+}
+.swalReject {
+  background-color: #d32f2f !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 8px 24px;
+  border: none;
+  font-size: 1em;
+  margin: 0 8px;
+  box-shadow: 0 2px 8px rgba(211,47,47,0.15);
+  transition: background 0.2s;
+}
+.swalReject:hover {
+  background-color: #a62828 !important;
+}
+@media (max-width: 600px){
+    .dashboardContainer {
+        padding: 10px;
+        min-height: 100vh;
+    }
+    .dashboardContainer .ring i {
+        top: 15px;
+        right: 20px;
+        font-size: 1.8rem;
+    }
+    .cardWrapper {
+        margin-top: 20px;
+        padding: 0 10px;
+    }
+    .img {
+        width: 100%;
+        max-width: 350px;
+        height: 180px;
+        border-radius: 12px;
+        margin: 20px 0 0 0;
+    }
+    .foundation {
+        width: 200px;
+        height: 15px;
+        margin: 10px 0 0 0;
+    }
+    .foundation span {
+        font-size: 1rem;
+        margin-top: 8px;
+    }
+    .bodyContentWrapper {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-radius: 20px 20px 0 0;
+    }
+    .toggleContainer {
+        margin-bottom: 12px;
+        gap: 8px;
+    }
+    .toggleButton {
+        padding: 0.4em 1.2em;
+        font-size: 0.9em;
+        border-radius: 6px;
+    }
+    .swalAccept,
+    .swalReject {
+        padding: 6px 20px;
+        font-size: 0.9em;
+        margin: 0 6px;
+    }
+}

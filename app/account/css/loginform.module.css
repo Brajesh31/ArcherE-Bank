@@ -1,0 +1,125 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    padding: 40px 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafbfc;
+    box-shadow: 0px 5px 24px rgba(0, 0, 0, 0.08);
+    transition: 0.5;
+}
+.login:focus-within {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+    border-color: #007bff;
+    transition: 0.5s;
+}
+.login h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+    color: #22223b;
+    letter-spacing: 1px;
+}
+
+.login label {
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 600;
+    color: #4a4e69;
+    font-size: 1rem;
+}
+
+.login input {
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    border: 1px solid #bfc0c0;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.login input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.login button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.login button:hover,
+.login button:focus {
+    background-color: #0056b3;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+}
+.links {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.links a:hover,
+.links a:focus {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.links p {
+    margin-top: 10px;
+    font-size: 0.97rem;
+    color: #4a4e69;
+}
+@media (max-width: 600px) {
+    .login {
+        max-width: 95vw;
+        padding: 30px 20px;
+        margin: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    .login h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    .login input {
+        padding: 15px 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+    .login button {
+        padding: 15px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        margin-top: 15px;
+    }
+    .links {
+        margin-top: 30px;
+    }
+    .links p {
+        font-size: 0.9rem;
+    }
+}

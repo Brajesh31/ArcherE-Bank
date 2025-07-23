@@ -1,0 +1,223 @@
+.navbar{
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    background: #00000099;
+    border-radius: 0 0 10px 10px ;
+    z-index: 50;
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.navbar div{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navbar div span{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+}
+.navbar ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+}
+/*.navbar ul li{
+    
+}*/
+.navbar ul li a{
+    color: var(--backgrounds);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: 0.5s;
+}
+.navbar ul li a::before{
+    content: "";
+    position: absolute;
+    overflow: hidden;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: 0.5s;
+}
+.navbar ul li a:hover::before{
+    background-color: #5848e5;
+    width: 100%;
+    transition: 0.5s;
+}
+.navbar ul li a:hover{
+    color: #978cff;
+    transition: 0.5s;
+}
+.navbar ul li:last-child a {
+    background: var(--primrary-button);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.navbar ul li:last-child a:hover {
+    background: #5848e5;
+    color: #fff;
+}
+.navbar ul li:last-child a:hover::before {
+    width: 0%;
+}
+.header{
+    width: 100%;
+    height: 100dvh;
+    background: url("/banar/Leonardo_Kino_XL_A_modern_futuristic_bank_building_labeled_ARC_3.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.header_contener{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fade-in 1s;
+    animation-delay: 0.3s;
+    animation-fill-mode:forwards;
+    transform: translateY(50px);
+    opacity: 0;
+}
+.header_contener div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header_contener div h1{
+    color: var(--header-text);
+    text-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5);
+    font-size: 3rem;
+    margin: 0;
+}
+.header_contener div h1 b{
+    color: var(--primary-color);
+}
+.header_contener div h4{
+    font-size: 1.5rem;
+    text-shadow: 3px 3px 5px rgba(255, 255, 255, 0.5);
+}
+.header_contener div button{
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin: 5px;
+    padding: 10px 20px;
+    background: var(--primrary-button);
+    border: 0;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgb(0, 0, 0,0.1);
+    transition: 0.5s;
+}
+.header_contener div button:nth-child(3){
+    background: var(--secandry-button);
+}
+.header_contener div button:hover{
+    transition: 0.5s;
+    background: #5848e5;
+    transform: translateY(-3px);
+}
+.header_contener div button:nth-child(3):hover{
+    background: #00a383;
+}
+
+@keyframes fade-in {
+    0%{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeDownIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animatedFadeDownIn {
+  animation: fadeDownIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+
+@media (max-width: 600px) {
+    .header{
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+    }
+    .navbar{
+        justify-content: space-between;
+    }
+    .navbar div{
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .navbar ul{
+        justify-content: flex-end;
+        width: auto;
+    }
+    .navbar ul li{
+        display: none;
+    }
+    .navbar ul li:last-child{
+        display: inline;
+    }
+    .header_contener{
+        text-align: center;
+    }
+    .header_contener div{
+        width: 100%;
+        max-width: 400px;
+    }
+    .header_contener h1{
+        font-size: 2rem;
+        text-align: center;
+        line-height: 1.2;
+    }
+    .header_contener h1 b{
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .header_contener h4{
+        font-size: 1.2rem;
+        margin: 10px 0 20px 0;
+    }
+    .header_contener button{
+        width: 100%;
+        max-width: 200px;
+        padding: 12px 20px;
+        font-weight: 600;
+        margin: 8px 0;
+        font-size: 1rem;
+    }
+}

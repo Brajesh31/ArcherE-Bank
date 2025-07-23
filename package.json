@@ -1,0 +1,32 @@
+{
+  "name": "archer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "jquery": "^3.7.1",
+    "next": "15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "socket.io-client": "^4.8.1",
+    "sweetalert2": "^11.22.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@types/jquery": "^3.5.32",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
+    "typescript": "^5"
+  }
+}

@@ -1,0 +1,29 @@
+.img {
+    width: 500px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    background: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    :hover {
+        box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+        transform: translateY(-2px);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+}
+
+
+@media (max-width: 600px){
+    .img {
+        width: 100%;
+        max-width: 350px;
+        height: 180px;
+        border-radius: 12px;
+        margin: 20px 0 0 0;
+    }
+    .canvas {
+        margin: 0;
+    }
+}

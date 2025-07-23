@@ -1,0 +1,157 @@
+.about_sec{
+    width: 100%;
+    height: 100dvh;
+    background: url("/banar/Leonardo_Kino_XL_A_clean_and_modern_About_Us_section_for_a_dig_3.jpg");
+    background-size: cover;
+    background-position: right;
+    display: flex;
+}
+.about_sec_contener{
+    width: 100%;
+    height: 100dvh;
+    background: linear-gradient(to right, rgba(0, 0, 0) 5%, rgba(0, 0, 0, 0) 70%);
+}
+.about_sec_text{
+    width: 40%;
+    height: 100%;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+    color: #fff;
+}
+.about_sec_text h2{
+    font-size: 2rem;
+    margin: 30px 0;
+    color: var(--text-color);
+    text-decoration: underline;
+}
+.about_sec_text p{
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: var(--text-color);
+}
+.about_sec_text ul li{
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin: 5px 0;
+}
+
+@keyframes aboutTextFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.aboutTextFadeIn {
+  animation: aboutTextFadeIn 1.2s ease-in both;
+}
+
+@keyframes aboutTextSlideIn {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.aboutTextSlideIn {
+  animation: aboutTextSlideIn 1.2s 0.2s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--primary-color);
+  width: 0;
+  animation: typing 2s steps(30, end) forwards;
+}
+
+@keyframes letterFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.letterFadeIn span {
+  opacity: 0;
+  animation: letterFadeIn 0.7s forwards;
+  display: inline-block;
+}
+.letterFadeIn span:nth-child(1) { animation-delay: 0.05s; }
+.letterFadeIn span:nth-child(2) { animation-delay: 0.1s; }
+.letterFadeIn span:nth-child(3) { animation-delay: 0.15s; }
+.letterFadeIn span:nth-child(4) { animation-delay: 0.2s; }
+.letterFadeIn span:nth-child(5) { animation-delay: 0.25s; }
+.letterFadeIn span:nth-child(6) { animation-delay: 0.3s; }
+.letterFadeIn span:nth-child(7) { animation-delay: 0.35s; }
+.letterFadeIn span:nth-child(8) { animation-delay: 0.4s; }
+.letterFadeIn span:nth-child(9) { animation-delay: 0.45s; }
+.letterFadeIn span:nth-child(10) { animation-delay: 0.5s; }
+
+.animatedUnderline a {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+}
+.animatedUnderline a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%; height: 2px;
+  background: var(--primary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+.animatedUnderline a:hover::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 600px){
+    .about_sec{
+        height: auto;
+        min-height: 100vh;
+        background-position: right;
+    }
+    .about_sec_contener{
+        height: auto;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.8) 100%);
+    }
+    .about_sec_text{
+        width: 90%;
+        height: auto;
+        padding: 20px 15px;
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+    }
+    .about_sec_text h2{
+        font-size: 1.8rem;
+        margin: 20px 0;
+        line-height: 1.2;
+    }
+    .about_sec_text p{
+        font-size: 1rem;
+        margin: 15px 0;
+        line-height: 1.5;
+    }
+    .about_sec_text ul{
+        padding: 0;
+        margin: 20px 0;
+        list-style: none;
+    }
+    .about_sec_text ul li{
+        font-size: 0.95rem;
+        margin: 8px 0;
+        line-height: 1.4;
+        padding: 5px 0;
+        position: relative;
+        padding-left: 20px;
+    }
+    .about_sec_text ul li::before{
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,192 @@
+.visa_sec{
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.visa_sec_text{
+    width: 80%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.visa_sec_text h2{
+    color: var(--header-text);
+    text-align: center;
+    font-size: 2rem;
+    margin: 0;
+}
+.visa_sec_text p{
+    color: var(--body-color);
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+.visa_card{
+    width: 100%;
+    height: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px 0;
+}
+.visa_card_img{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.visa_card button{
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    color: #fff;
+    background: transparent;
+    font-size: 1rem;
+    border-radius: 50px;
+    margin: 10px;
+    transition: 0.5s;
+}
+.visa_card button i{
+    color: black;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+.img{
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+}
+.img:hover{
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
+    transform: translateY(-5px);
+    transition: 0.5s;
+}
+.foundation{
+    width: 40%;
+    height: auto;
+    margin: 20px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    border-top: 5px solid rgba(0, 0, 0, 0.1);
+    border-left: 5px solid rgba(0, 0, 0, 0.1);
+    border-right: 5px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.swalInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-size: 1.05rem;
+    color: var(--body-color);
+    align-items: flex-start;
+    margin-top: 18px;
+    background: var(--background-secondary, #f8f9fa);
+    padding: 20px 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.swalInfo div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1.6;
+}
+
+.swalInfo strong {
+    color: var(--header-text, #222);
+    font-weight: 600;
+    min-width: 90px;
+}
+
+.swalVisaImg {
+    vertical-align: middle;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    margin-left: 8px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    padding: 2px;
+    width: 95%;
+    height: auto;
+    object-fit: contain;
+    transition: box-shadow 0.3s;
+}
+
+.swalVisaImg:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+}
+@media (max-width: 600px){
+    .visa_card {
+        width: 100%;
+        height: auto;
+        margin: 15px 0;
+    }
+    .visa_card_img {
+        width: 100%;
+        height: auto;
+        padding: 0 10px;
+        justify-content: center;
+        gap: 10px;
+    }
+    .visa_card button {
+        width: 60px;
+        height: 50px;
+        font-size: 0.9rem;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        margin: 5px;
+    }
+    .visa_card button i {
+        font-size: 1.2rem;
+        color: #333;
+    }
+    .img {
+        max-width: 240px;
+        height: auto;
+        border-radius: 8px;
+    }
+    .foundation {
+        width: 80%;
+        padding: 15px 30px;
+        margin: 15px 0;
+    }
+    .foundation .foundation_item {
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+    }
+    .swalInfo {
+        padding: 15px 20px;
+        font-size: 0.95rem;
+        gap: 12px;
+    }
+    .swalInfo strong {
+        min-width: 80px;
+        font-size: 0.9rem;
+    }
+    .swalVisaImg {
+        width: 100%;
+        margin: 10px 0;
+    }
+}

@@ -1,0 +1,25 @@
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animatedFadeSlideIn {
+  animation: fadeSlideIn 1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.main{
+    width: 100%;
+    height: auto;
+    display: flex;
+    background: var(--backgrounds);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}

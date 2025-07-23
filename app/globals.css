@@ -1,0 +1,20 @@
+:root{
+  --primary-color : #6C63FF;
+  --secondary-color : #00B894;
+  --backgrounds: #FAFAFE;
+  --header-text:#202124;
+  --body-color: #5F6368;
+  --text-color: #e3e3e3;
+  --primrary-button: #6c63ff;
+  --secandry-button:  #00b894;
+}
+html{
+  scroll-behavior: smooth;
+}
+body{
+  background-color: var(--backgrounds);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

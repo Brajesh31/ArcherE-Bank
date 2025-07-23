@@ -1,0 +1,121 @@
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 2.5rem 2rem;
+    background: #fff;
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s;
+}
+.container:focus-within {
+    box-shadow: 5px 5px 25px rgba(37,99,235,0.5);
+    transition: 0.5s;
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: #18181b;
+    letter-spacing: -1px;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #71717a;
+    margin-bottom: 2rem;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form label {
+    font-size: 1rem;
+    color: #27272a;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.form input {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+.form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px #2563eb22;
+    transform: translateY(-3px);
+}
+
+.form button {
+    margin-top: 1rem;
+    padding: 0.75rem 0;
+    background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+}
+
+.form button:hover {
+    background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+    transform: translateY(-2px) scale(1.02);
+}
+@media (max-width: 600px){
+    .container {
+        max-width: 90vw;
+        margin: 20px auto;
+        padding: 2rem 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .title {
+        font-size: 1.8rem;
+        margin-bottom: 0.25rem;
+        text-align: center;
+    }
+    .description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .form {
+        gap: 1rem;
+    }
+    .form label {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+    }
+    .form input {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+    }
+    .form input:focus {
+        transform: translateY(-2px);
+    }
+    .form button {
+        padding: 1rem 0;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        margin-top: 1.5rem;
+    }
+}

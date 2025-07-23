@@ -1,0 +1,20 @@
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 600px) {
+    .main {
+        height: auto;
+        min-height: 100vh;
+        padding: 20px 0;
+        align-items: center;
+        justify-content: center;
+    }
+}
