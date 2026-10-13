@@ -32,3 +32,5 @@ The backend listens on port `5555` and the frontend expects local development on
 This is not production banking software. The current server stores plaintext passwords, a SHA-256 password digest without a password-specific salt, generated card numbers/CVVs, and account identifiers. Replace these behaviors with a vetted password hash, tokenized payment-provider data, authorization middleware, TLS, validation, audit logging, and a migration-managed schema before handling real users or money.
 
 See [`SECURITY.md`](./SECURITY.md) and [`docs/database.md`](./docs/database.md).
+
+Last updated: 2026-10-13 16:02 UTC
