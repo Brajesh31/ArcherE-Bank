@@ -33,4 +33,4 @@ This is not production banking software. The current server stores plaintext pas
 
 See [`SECURITY.md`](./SECURITY.md) and [`docs/database.md`](./docs/database.md).
 
-Last updated: 2026-10-25 22:56 UTC
+Last updated: 2026-10-26 00:57 UTC
