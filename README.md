@@ -303,7 +303,7 @@ No automated test suite was present in the inspected original tree. Build succes
 
 Static inspection identified plaintext password persistence, unsalted SHA-256, CVV-like data storage/response, client-supplied account identifiers, client-controlled socket identity and non-atomic transfer writes. Use synthetic data only. Do not deploy for real users, identity records, card data or money. Read [SECURITY.md](SECURITY.md) and [Security review](docs/security.md).
 
-## ⚡ Performance and accessibility
+## 📦 Dependency health\n\nThe initial GitHub Actions audit of the existing locked dependencies reported 13 root production-tree vulnerabilities (2 critical) and 22 backend production-tree vulnerabilities (2 critical). No dependency versions or lockfiles were changed in this documentation update. Review [Security](docs/security.md) before using the application; do not apply breaking forced upgrades without testing.\n\n## ⚡ Performance and accessibility
 
 No benchmark or completed accessibility audit is claimed. Measure API latency, query plans, bundle size, socket fan-out and history payload sizes. Review keyboard access, labels, contrast, focus, responsive layouts and live regions. See [Performance](docs/performance.md) and [Accessibility](docs/accessibility.md).
 
