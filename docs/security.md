@@ -50,7 +50,7 @@ Authenticate Socket.IO from the same verified session. Assign server-controlled 
 
 Use least-privilege DB accounts, secret injection, HTTPS, strict CORS, schema validation, rate limits, redacted logs, audit events, encrypted backups and tested recovery.
 
-## Release gate
+## Dependency audit baseline\n\nGitHub Actions dependency scans on 2026-11-16 reported 13 vulnerabilities in the root production dependency tree (including 2 critical) and 22 in the backend production dependency tree (including 2 critical). The findings include transitive packages used by the existing locked dependencies. This audit was performed without changing package manifests or lockfiles. Do not run npm audit fix --force blindly: the backend audit reports that its suggested forced remediation would change sqlite3 to a new major version, and the frontend audit proposes a Next.js version outside the currently declared dependency range. Review the advisory paths, update dependencies in a separately tested change, regenerate the appropriate lockfile and rerun build/integration checks.\n\n## Release gate
 
 The application remains educational until critical findings are fixed and independently verified. Evidence must include authorization, sensitive-response, concurrent transfer, rollback, session/socket and migration tests.
 
