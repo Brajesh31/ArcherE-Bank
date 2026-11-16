@@ -17,13 +17,18 @@
 ![Socket.IO](https://img.shields.io/badge/Socket.IO-Realtime-010101?logo=socketdotio)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Educational%20Prototype-orange)
+![CI](https://github.com/Brajesh31/ArcherE-Bank/actions/workflows/ci.yml/badge.svg)
+![Docs](https://github.com/Brajesh31/ArcherE-Bank/actions/workflows/docs-check.yml/badge.svg)
+![Stars](https://img.shields.io/github/stars/Brajesh31/ArcherE-Bank?style=social)
+![Forks](https://img.shields.io/github/forks/Brajesh31/ArcherE-Bank?style=social)
+![Issues](https://img.shields.io/github/issues/Brajesh31/ArcherE-Bank)
 
 </div>
 
 > [!CAUTION]
 > **Educational prototype only. Not a bank or payment service. Never enter real passwords, identity records, card details, CVVs, customer data or money.** Static inspection found critical credential, authorization, card-data and transaction-integrity weaknesses. Do not deploy this code to handle real users or funds.
 
-## 🧭 Contents
+## 🖼️ Existing visual assets\n\nThese are repository artwork assets, not screenshots of a verified running application.\n\n<div align="center">\n<img src="https://raw.githubusercontent.com/Brajesh31/ArcherE-Bank/main/public/logo/AlbedoBase_XL_A_golden_stylized_eagle_with_outstretched_wings_2%20(1).jpg" alt="ArcherE-Bank eagle artwork" width="240">\n<img src="https://raw.githubusercontent.com/Brajesh31/ArcherE-Bank/main/public/visa_card/archer.png" alt="Archer card visual" width="320">\n</div>\n\n## 🧭 Contents
 - [🌟 Overview](#-overview)
 - [🎯 Problem and objectives](#-problem-and-objectives)
 - [✨ Features](#-features)
