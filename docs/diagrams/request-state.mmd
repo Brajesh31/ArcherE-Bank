@@ -1,0 +1,6 @@
+stateDiagram-v2
+    [*] --> Pending: request created
+    Pending --> Accepted: accept action
+    Pending --> Rejected: reject action
+    Accepted --> [*]
+    Rejected --> [*]

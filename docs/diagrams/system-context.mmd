@@ -1,0 +1,7 @@
+flowchart TB
+    User([Browser user]) --> Browser[Browser]
+    Browser --> UI[Next.js App Router]
+    UI -->|HTTP and cookies| API[Express API]
+    Browser <-->|Socket.IO| Socket[Realtime server]
+    API --> DB[(MySQL)]
+    Socket --> API

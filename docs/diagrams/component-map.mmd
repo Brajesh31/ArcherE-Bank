@@ -1,0 +1,10 @@
+flowchart TB
+    Page[Dashboard page] --> Content[Content component]
+    Page --> Card[Card art]
+    Page --> Transfer[Transfer component]
+    Page --> Request[Request component]
+    Page --> Trades[Trades component]
+    Transfer --> API[Express API]
+    Request --> API
+    Trades --> API
+    Page <-->|Socket events| Socket[Socket.IO]

@@ -1,12 +1,46 @@
-## Summary
+## 📝 Summary
+Describe the change, the problem it solves and intended behavior.
 
-Describe the frontend, backend, account, transfer, or documentation change.
+## 🔗 Related issue
+Closes #
 
-## Security and validation
+## 🧭 Change category
+- [ ] Bug fix
+- [ ] Feature
+- [ ] Documentation
+- [ ] Refactor
+- [ ] Security
+- [ ] Maintenance
 
-- [ ] No real financial or identity data used
-- [ ] Authentication and authorization tested
-- [ ] Amount validation, idempotency, and transaction behavior tested
-- [ ] Password/card/CVV handling reviewed
-- [ ] Frontend lint/build checks pass
-- [ ] Documentation updated
+## 🧪 Validation
+List exact commands and actual results. Do not claim a check passed unless run.
+
+## 🔐 Security and data review
+- [ ] No credentials, tokens, cookies or private keys added.
+- [ ] No real personal, identity, card or financial data included.
+- [ ] Authentication and ownership considered.
+- [ ] Transfer/request atomicity and idempotency considered.
+- [ ] Sensitive data is not returned or logged.
+- [ ] Dependency/configuration impact reviewed.
+
+## 🗄️ Database and API
+- [ ] Migration and rollback documented, if applicable.
+- [ ] API request/response documented.
+- [ ] Failure and retry behavior considered.
+- [ ] Socket events and authorization updated, if applicable.
+
+## 📚 Documentation and visuals
+- [ ] README and relevant docs updated.
+- [ ] Mermaid diagrams updated.
+- [ ] Screenshots are genuine and use synthetic values.
+- [ ] Internal links and image paths checked.
+
+## ♿ Accessibility
+- [ ] Keyboard navigation considered.
+- [ ] Labels, focus and status announcements considered.
+- [ ] Responsive behavior considered.
+
+## ✅ Final review
+- [ ] Existing files/assets preserved.
+- [ ] Scope is focused.
+- [ ] Actual checks are reported honestly.

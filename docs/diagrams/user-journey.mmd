@@ -1,0 +1,12 @@
+flowchart TD
+    A([Visitor]) --> B[Landing page]
+    B --> C{Choose action}
+    C -->|Register| D[Registration form]
+    C -->|Login| E[Login form]
+    D --> F[Prototype account creation]
+    E --> G[Prototype login]
+    F --> H[Dashboard]
+    G --> H
+    H --> I[Account/card-style display]
+    H --> J[Transfer and request UI]
+    H --> K[Activity history]

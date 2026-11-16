@@ -1,0 +1,8 @@
+flowchart TD
+    A([Start local environment]) --> B[Start MySQL]
+    B --> C[Start Express server]
+    C --> D[Load environment and connect DB]
+    D --> E[Create/check prototype tables]
+    E --> F[Listen on port 5555]
+    F --> G[Start Next.js on port 3000]
+    G --> H[Open browser]

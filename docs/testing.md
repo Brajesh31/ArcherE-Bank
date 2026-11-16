@@ -1,66 +1,78 @@
-# 🧪 Testing and verification strategy
+# 🧪 Testing strategy and quality plan
 
-## Current test status
+## Current status
 
-No test files or test runner were present in the inspected repository tree. This document is a testing plan, not a claim that tests have passed.
+No automated test runner or test suite was present in the inspected original tree. This document defines a plan and does not claim tests have passed.
 
 ## Verification layers
 
-| Layer | What to verify | Suggested tooling |
+| Layer | Scope | Suggested tooling |
 |---|---|---|
-| Static checks | TypeScript and lint feedback | TypeScript compiler, ESLint |
-| Frontend unit | Form validation and component states | Vitest/Jest and React Testing Library, if introduced |
-| API integration | Routes, schemas, errors and session behavior | Supertest with disposable database |
-| Database integration | Migrations, rollback, constraints and transaction behavior | Isolated MySQL test database |
-| Realtime | Authenticated socket access and event isolation | Socket.IO client test harness |
-| End-to-end | Login, onboarding and dashboard navigation | Playwright, if introduced |
-| Security | Authorization, injection, abuse and sensitive-data exposure | Code review and appropriate scanners |
+| Static | Syntax, TypeScript, lint | ESLint, TypeScript, Node syntax |
+| Component | Form states/rendering | Vitest/Jest, React Testing Library |
+| API | HTTP status/payload | Supertest |
+| Database | Constraints/transactions | Disposable MySQL |
+| Realtime | Socket identity/event isolation | Socket.IO test client |
+| E2E | Login/dashboard | Playwright |
+| Security | Dependencies/code review | npm audit and manual review |
 
-## Critical test catalogue
+## Existing checks
 
-| ID | Scenario | Expected safe behavior |
-|---|---|---|
-| AUTH-01 | Missing login fields | Reject with a structured validation response |
-| AUTH-02 | Wrong password | Reject without leaking which credential was wrong |
-| AUTH-03 | Account A requests Account B data | Deny access |
-| AUTH-04 | Expired/revoked session | Deny access |
-| XFER-01 | Zero or negative amount | Reject before database mutation |
-| XFER-02 | Non-numeric amount | Reject before database mutation |
-| XFER-03 | Insufficient funds | No ledger or balance changes |
-| XFER-04 | Database failure after debit stage | Roll back all transfer writes |
-| XFER-05 | Duplicate idempotency key | Do not execute transfer twice |
-| XFER-06 | Concurrent transfers over available funds | Never permit overspending |
-| REQ-01 | Accept a request twice | At most one successful state transition |
-| REQ-02 | Unrelated user accepts request | Deny access |
-| SOCK-01 | Socket claims another account code | Deny or ignore untrusted identity |
-| DATA-01 | Account data response | Never include password or CVV |
-| DATA-02 | Error logging | Redact credentials and personal data |
-
-## Local checks
-
-Frontend dependencies:
-
-```bash
+~~~bash
 npm ci
 npm run build
 npx eslint .
-```
+~~~
 
-Backend dependencies:
+Backend:
 
-```bash
+~~~bash
 cd server
 npm ci
 node --check server.js
 node --check db.js
-```
+~~~
 
-These commands check installation, build/lint and JavaScript syntax. They do not validate transfer correctness or security.
+These checks do not prove financial correctness or security.
 
-## Test data rules
+## Critical test catalogue
 
-- Use synthetic names and reserved test values.
-- Never use a real national ID, phone number, card, CVV, password or account balance.
-- Reset disposable databases between test runs.
-- Do not upload database dumps to public CI artifacts.
-- Ensure failure-path tests verify that no partial write remains.
+| ID | Scenario | Required result |
+|---|---|---|
+| AUTH-001 | Missing login values | Structured validation error |
+| AUTH-002 | Wrong password | Generic failure |
+| AUTH-003 | Expired session | Denied |
+| AUTH-004 | Account A reads Account B | Denied |
+| AUTH-005 | Password persistence | No plaintext |
+| DATA-001 | Account response | No CVV/password/hash |
+| XFER-001 | Zero/negative/fractional amount | Rejected |
+| XFER-002 | Insufficient funds | No writes |
+| XFER-003 | Failure after debit | Full rollback |
+| XFER-004 | Duplicate idempotency key | At most one transfer |
+| XFER-005 | Concurrent spending | No overspending |
+| REQ-001 | Accept same request twice | One transition |
+| REQ-002 | Unauthorized acceptance | Denied |
+| SOCK-001 | Socket claims another account | Denied |
+| OPS-001 | DB unavailable | Safe failure/no secret leak |
+
+## Transfer invariant matrix
+
+| Starting state | Command | Required outcome |
+|---|---|---|
+| 500 units | Transfer 100 | Sender 400, recipient +100, balanced ledger |
+| 500 units | Transfer 0 | Rejected, no write |
+| 500 units | Transfer -1 | Rejected, no write |
+| 500 units | Transfer 501 | Rejected, no write |
+| 500 units | Same idempotency key twice | One operation |
+| 500 units | Concurrent 300 + 300 | At most one succeeds |
+| Any | DB error mid-transaction | Full rollback |
+
+These are target tests, not current results.
+
+## Test data policy
+
+Use synthetic values, deterministic fixtures and disposable schemas. Never use real passwords, identity values, phone numbers, card data or CVVs. Redact logs and reset fixtures between runs.
+
+## CI and definition of done
+
+CI should install from lockfiles, build/lint frontend, check backend syntax, validate docs and audit dependencies. Add test commands when a test runner exists. A change is complete when behavior, tests, authorization, rollback, documentation and diagrams agree.

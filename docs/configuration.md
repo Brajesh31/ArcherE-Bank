@@ -1,43 +1,51 @@
-# ⚙️ Configuration
+# ⚙️ Configuration reference
 
-## Backend environment
+## 1. Configuration sources
 
-The database connection in `server/db.js` reads these environment variables:
+The backend loads dotenv in server/db.js and reads MySQL values from process environment. Express and Socket.IO CORS origins and backend port are hard-coded in server/server.js.
 
-| Name | Required for non-default setup | Description |
-|---|---:|---|
-| `DB_HOST` | Yes | MySQL hostname |
-| `DB_USER` | Yes | Database login |
-| `DB_PASSWORD` | Yes | Database password |
-| `DB_NAME` | Yes | Database name |
+## 2. Backend environment variables
 
-The current fallback values are `localhost`, `root`, an empty password and `archerbank`. These defaults are only appropriate for a disposable local environment. Do not rely on them in shared infrastructure.
+| Variable | Meaning | Current fallback |
+|---|---|---|
+| DB_HOST | MySQL hostname | localhost |
+| DB_USER | MySQL username | root |
+| DB_PASSWORD | MySQL password | Empty string |
+| DB_NAME | Database/schema | archerbank |
 
-## Frontend API URL
+The root/empty-password fallback is not suitable for production. Use a dedicated account and strong local-only password.
 
-The root `.env.example` contains `NEXT_PUBLIC_API_BASE_URL=http://localhost:5555`. In Next.js, variables prefixed with `NEXT_PUBLIC_` are intended for browser exposure. Never put secrets, database credentials, signing keys or private tokens in such variables.
+## 3. Frontend environment
 
-The exact frontend consumption should be checked in the UI code before changing the name or assuming the setting is wired into every request.
+The root .env.example documents NEXT_PUBLIC_API_BASE_URL as a local API URL convention. Check actual frontend call sites before assuming every request uses it.
 
-## CORS and ports
+NEXT_PUBLIC variables may be embedded in browser assets. Never put DB passwords, signing keys, session secrets or private tokens in them.
 
-The backend currently hard-codes:
+## 4. Ports and CORS
 
-- HTTP server port: `5555`.
-- CORS origin: `http://localhost:3000`.
-- Socket.IO CORS origin: `http://localhost:3000`.
+| Service | Current value |
+|---|---|
+| Next.js development | 3000 by default |
+| Express and Socket.IO | 5555, hard-coded |
+| MySQL | Local DB configuration |
 
-A future configuration change should use an explicit comma-separated allowlist, validate it at startup, and reject wildcard origins when credentialed requests are enabled.
+Express and Socket.IO currently allow http://localhost:3000. A future deployment should use a validated server-only allowlist. Avoid wildcard origins with credentialed requests.
 
-## Local setup example
+## 5. Local example
 
-Create `server/.env` with local-only values:
+Create server/.env:
 
-```dotenv
+~~~dotenv
 DB_HOST=127.0.0.1
 DB_USER=archer_dev
 DB_PASSWORD=replace_with_local_secret
 DB_NAME=archerbank
-```
+~~~
 
-Keep actual `.env` files out of Git. Rotate any credential that has ever been committed or shared.
+## 6. Recommended startup validation
+
+A hardened server should validate required variables, reject weak production defaults, parse ports as bounded integers, validate origins, fail fast with redacted errors and never log secrets.
+
+## 7. Secret rotation
+
+If a credential is committed or shared, revoke it at the provider, review access logs, remove it from active configuration and assess repository history. Deleting the latest file does not invalidate an exposed credential.

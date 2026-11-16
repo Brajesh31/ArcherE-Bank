@@ -1,0 +1,7 @@
+flowchart TB
+    User[External user]
+    System((ArcherE-Bank prototype))
+    DB[(MySQL)]
+    User -->|Input and actions| System
+    System -->|Responses and notifications| User
+    System <-->|Account and activity records| DB

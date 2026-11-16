@@ -1,41 +1,31 @@
-# ♿ Accessibility review checklist
+# ♿ Accessibility review guide
 
-This document defines checks for the existing frontend. It does not claim that an accessibility audit has already passed.
+This is a review plan, not a claim that the interface currently conforms to WCAG.
 
-## Interaction and forms
+## Forms
 
-- Every input has a persistent programmatic label.
-- Required fields and validation failures are announced to assistive technology.
-- Errors explain how to correct the input.
-- Password visibility controls have accessible names and state.
-- All actions work with keyboard alone.
-- Focus order follows visual and reading order.
-- Focus indicators remain visible.
-- Dialogs and alerts manage focus and can be dismissed accessibly.
+Every input needs a visible label. Required fields must be identified in text. Errors should be associated with inputs and explain correction. Password controls need accessible names/state. Submit buttons should expose loading/disabled state. Success/error messages should be announced and focus should move predictably.
 
-## Structure and content
+## Navigation and structure
 
-- Use semantic landmarks and heading hierarchy.
-- Buttons perform actions; links navigate.
-- Decorative images use empty alt text; informative images use useful alt descriptions.
-- Avoid using color as the only indicator of transfer/request status.
-- Tables have clear header associations.
-- Live updates are announced without overwhelming the user.
+Use semantic landmarks, logical heading hierarchy, links for navigation, buttons for actions, keyboard-accessible controls, visible focus and skip navigation where useful.
 
-## Visual design
+## Dashboard information
 
-- Check text and controls against WCAG contrast expectations.
-- Support browser zoom and text resizing.
-- Avoid clipped content at narrow viewport sizes.
-- Respect reduced-motion preferences.
-- Ensure card artwork does not make essential information inaccessible.
+Do not communicate status through color alone. Use clear labels and text. Provide table headers. Make card-style visual information available as text. Announce realtime updates without overwhelming screen-reader users. Ensure dialogs manage focus.
 
-## Suggested verification
+## Visual presentation
 
-1. Navigate every page using Tab, Shift+Tab, Enter, Space and Escape.
+Check contrast, zoom, text resizing, narrow-screen clipping, reduced-motion preferences and image alternatives. Avoid information embedded only in images.
+
+## Verification workflow
+
+1. Navigate with keyboard only.
 2. Test with a screen reader.
-3. Inspect labels, roles, names and live regions.
-4. Run an automated checker, then manually review every reported issue.
-5. Test at 200% zoom and on a narrow viewport.
+3. Inspect accessible names, roles and live regions.
+4. Check 200% zoom and narrow viewport.
+5. Run automated accessibility checks.
+6. Manually review findings.
+7. Record browser, assistive technology and date.
 
-Automated accessibility tools cannot replace keyboard and assistive-technology testing.
+Automated scans detect only a subset of issues. A feature is not complete if keyboard users cannot reach it, errors are not perceivable, focus is lost or essential status is conveyed only through color.

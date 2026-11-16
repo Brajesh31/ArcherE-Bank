@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant DB
+    Client->>API: POST /transfer
+    API->>DB: Find recipient
+    DB-->>API: Recipient
+    API->>DB: Find source and balance
+    DB-->>API: Source
+    API->>DB: Debit source
+    API->>DB: Credit recipient
+    API->>DB: Insert transfer history
+    API-->>Client: Response
+    Note over API,DB: Current writes are not one transaction

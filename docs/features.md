@@ -1,48 +1,62 @@
-# ✨ Feature catalogue
+# ✨ Feature catalogue and implementation status
 
-The following catalogue is based on the checked-in frontend structure and backend route/event names.
+**Present** means source exists. **Needs verification** means runtime behavior was not tested. **Unsafe/incomplete** means a known security or integrity gap exists. **Proposed** means not currently implemented.
 
-## Public experience
+## Frontend
 
-### Landing page
-The root App Router page is `app/page.tsx`. Shared visual sections are under `app/components/`, with CSS modules under `app/css/`. The repository includes existing banner and logo assets under `public/`.
+| Feature | Source | Description | Status |
+|---|---|---|---|
+| Landing | app/page.tsx | Entry page and presentation | Present |
+| Header/footer | app/components/ | Shared site shell | Present |
+| About | app/components/about.tsx | Project information | Present |
+| Card visual | app/components/visa.tsx | Card-style presentation | Present |
+| Login | app/account/ | Login route/form | Session unsafe |
+| Registration | app/account/register/ | Registration UI | Credential unsafe |
+| Dashboard | app/dashboard/page.tsx | Dashboard composition | Needs verification |
+| Transfer UI | dashboard/components/transfer.tsx | Transfer interaction | Backend unsafe |
+| Request UI | dashboard/components/request.tsx | Request interaction | Backend unsafe |
+| Activity | dashboard/components/trades.tsx | History display | Present |
+| Card artwork | dashboard/components/visaart.tsx | Card visuals | Present |
 
-### Account login
-The login route and form are under `app/account/`. The backend route is `POST /login`. The current server accepts `nationalID` or a legacy `nunationalID` request property and returns a cookie on a successful match.
+## Backend inventory
 
-### Account registration
-The registration route and form are under `app/account/register/`. The backend generates a random code and card-like data, then attempts to persist user and card records.
-
-## Dashboard
-
-The dashboard page is `app/dashboard/page.tsx`. Its feature components include:
-
-- `content.tsx`: dashboard content.
-- `transfer.tsx`: transfer interaction.
-- `request.tsx`: payment request interaction.
-- `trades.tsx`: transfer/activity presentation.
-- `visaart.tsx`: card artwork.
-
-## Backend capabilities
-
-| Capability | Route/event | Current behavior |
+| Route/event | Current behavior | Caveat |
 |---|---|---|
-| Health text | `GET /` | Returns a short backend-running message |
-| Account details | `POST /get_my_data` | Selects card-like fields using supplied account key |
-| Registration | `POST /register` | Inserts user and card-like records |
-| Login | `POST /login` | Compares national ID and SHA-256 digest, sets cookie |
-| Transfer | `POST /transfer` | Attempts debit, credit and transfer-history insertion |
-| Payment request | `POST /request` | Creates pending request |
-| Notifications | `POST /get_notification` | Returns pending incoming/outgoing request data |
-| Accept request | `POST /accept_request` | Attempts balance movement and marks request accepted |
-| Reject request | `POST /reject_request` | Marks request rejected |
-| Trades | `get_trades` / `trades_update` | Sends transfer history and balance |
-| Request alert | `request_notification` | Pushes incoming request notification |
-| Rejection alert | `rejected_notification` | Pushes rejection notification |
+| GET / | Liveness text | Not readiness |
+| POST /register | Inserts user/card rows | Plaintext password; non-atomic |
+| POST /login | SHA-256 and cookie | Weak verifier/session |
+| POST /get_my_data | Reads account fields | CVV-like value returned |
+| POST /transfer | Balance/history writes | Non-atomic |
+| POST /request | Creates pending request | Client-key identity |
+| POST /get_notification | Reads requests | Client-key identity |
+| POST /accept_request | Accepts and moves amount | Non-atomic |
+| POST /reject_request | Marks rejected | State/identity gaps |
+| get_trades | Requests activity/balance | Client supplies code |
+| trades_update | Sends activity/balance | Socket authorization weak |
+| request_notification | Notifies target | Handshake matching |
+| rejected_notification | Notifies requester | Handshake matching |
 
-## Feature status vocabulary
+## User journey
 
-- **Present in source:** a route or component exists.
-- **Needs local verification:** the source exists, but runtime/browser behavior has not been tested in this documentation pass.
-- **Not production-ready:** security or consistency requirements are not met.
-- **Planned:** not implemented; see [ROADMAP.md](../ROADMAP.md).
+~~~mermaid
+flowchart TD
+    A([Visitor]) --> B[Landing page]
+    B --> C{Choose action}
+    C -->|Register| D[Registration form]
+    C -->|Login| E[Login form]
+    D --> F[Prototype account creation]
+    E --> G[Prototype login]
+    F --> H[Dashboard]
+    G --> H
+    H --> I[Account/card UI]
+    H --> J[Transfer/request UI]
+    H --> K[Activity UI]
+~~~
+
+## Realtime
+
+Socket.IO supports activity refreshes and request/rejection notifications. Current socket matching uses client-provided handshake values. Future code must authenticate sockets and authorize each account-specific event.
+
+## Recommended sequence
+
+Prioritize secure sessions, authorization, card-data minimization, atomic ledger-backed transfers, idempotency, migrations and tests before adding more banking-themed functionality.

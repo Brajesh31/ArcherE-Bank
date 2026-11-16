@@ -1,63 +1,103 @@
 # 🔄 Application workflows
 
-This document follows the route and event flow visible in `server/server.js` and the matching frontend feature areas. It describes current behavior and highlights where current behavior is not safe enough for production.
+This document describes sequences visible in server/server.js. It does not claim the flows are secure or production-ready.
 
-## Account registration
+## Local startup
 
-1. The user opens the registration page under `app/account/register/`.
-2. The registration component collects name, password, national ID, phone number and selected card type.
-3. The frontend sends a request to `POST /register`.
-4. The backend generates a random account code and card-like number, expiry and CVV.
-5. The backend inserts a user row, then a card-like row using the same account code.
-6. The backend returns a success response if both operations complete.
+~~~mermaid
+flowchart TD
+    A([Start local stack]) --> B[Start MySQL]
+    B --> C[Start Express backend]
+    C --> D[Load DB environment]
+    D --> E[Connect to MySQL]
+    E --> F[Create/check prototype tables]
+    F --> G[Listen on port 5555]
+    G --> H[Start Next.js]
+    H --> I[Open browser on port 3000]
+~~~
 
-**Failure concern:** the two inserts are not in a transaction. A partial registration can leave inconsistent records. The password is also currently inserted into a plaintext database column.
+## Registration
+
+1. User opens registration route.
+2. Form collects name, password, national ID, phone and card type.
+3. Browser sends POST /register.
+4. Backend generates a random account code and card-like number, expiry and CVV-like value.
+5. Backend inserts user row.
+6. Backend inserts card-style row with shared random code.
+7. API responds after both callbacks complete.
+
+~~~mermaid
+sequenceDiagram
+    actor User
+    participant Form as Registration UI
+    participant API as Express
+    participant DB as MySQL
+    User->>Form: Enter synthetic details
+    Form->>API: POST /register
+    API->>API: Generate demo values
+    API->>DB: INSERT users
+    DB-->>API: Insert result
+    API->>DB: INSERT visa_info
+    DB-->>API: Insert result
+    API-->>Form: Response
+~~~
+
+Risk: inserts are not transactional, and plaintext password is persisted.
 
 ## Login
 
-1. The login UI submits national ID and password.
-2. The server hashes the submitted password with SHA-256.
-3. The server compares the digest and national ID against `users`.
-4. On a match, it sets a `user_key` cookie containing the account random code.
-
-**Failure concern:** the code does not establish a complete secure session model. Password hashing and cookie configuration require redesign before real use.
+The form submits national ID and password. Backend computes SHA-256, searches for matching ID/digest and sets a user_key cookie on success. SHA-256 is not a password storage algorithm; the cookie is not a complete secure session.
 
 ## Transfer
 
-The current transfer endpoint finds a recipient using phone/card value, fetches the sender by random code, checks a balance, issues a debit, issues a credit, inserts history, responds, and emits updates.
+The route resolves recipient, resolves source using caller-supplied key, checks balance, debits, credits and inserts history.
 
-```mermaid
+~~~mermaid
 flowchart TD
-    A[Transfer form] --> B[Validate client input]
-    B --> C[POST /transfer]
-    C --> D[Recipient lookup]
-    D --> E[Sender lookup]
-    E --> F[Balance check]
-    F --> G[Debit]
-    G --> H[Credit]
-    H --> I[Insert transfer history]
-    I --> J[Emit balance/activity updates]
-```
+    A([Transfer form]) --> B[POST /transfer]
+    B --> C[Resolve recipient]
+    C --> D[Resolve source by supplied key]
+    D --> E{Enough balance?}
+    E -->|No| F[Return error]
+    E -->|Yes| G[Debit source]
+    G --> H[Credit recipient]
+    H --> I[Insert history]
+    I --> J[Emit updates]
+~~~
 
-The sequence above is what the code attempts. It is vulnerable to partial updates and concurrent balance races because there is no encompassing transaction and row-lock strategy.
+Risk: writes are independent; no idempotency/row-lock strategy is visible.
 
 ## Payment request
 
-1. The requester submits a target phone/card value and amount.
-2. The backend resolves the target account.
-3. The backend loads requester profile information.
-4. A pending request row is created.
-5. A connected target socket may receive a request notification.
+Client submits requester key, target lookup value and amount. Backend resolves target by phone/card-like value, loads requester details, inserts pending request and sends socket notification to matching handshake code.
 
-## Accept/reject request
+## Accept/reject
 
-- Accept: the backend loads a request addressed to the caller-provided account code, checks balance, subtracts from one account, adds to another, marks the request accepted, writes a transfer record, and emits updates.
-- Reject: the backend marks the request rejected and may notify the requester.
+~~~mermaid
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Accepted: accept_request
+    Pending --> Rejected: reject_request
+    Accepted --> [*]
+    Rejected --> [*]
+~~~
 
-**Failure concern:** the state transition and money movement are not atomic. Acceptance must be idempotent, authorized, and transactionally consistent.
+Acceptance performs separate balance, request-status and history writes. Rejection changes status and attempts notification. Both need server-derived identity, authorized transitions and atomicity.
 
-## Realtime activity
+## Activity updates
 
-A client emits `get_trades` with a code. The server reads matching transfers and balance and emits `trades_update`. It also iterates connected sockets to send notification/update events.
+Client emits get_trades. Server reads transfer rows and balance, then emits trades_update. The current handler reads account code from event payload or handshake data, which is not a safe identity mechanism.
 
-A secure design must derive socket identity from a verified session and authorize each room subscription on the server.
+## Safe failure expectations
+
+| Failure | Required future behavior |
+|---|---|
+| Missing input | Validate before DB writes |
+| Unknown recipient | Generic not-found response |
+| Insufficient funds | No financial mutation |
+| DB failure | Full transaction rollback |
+| Duplicate retry | Return prior idempotent result |
+| Unauthorized actor | Deny without leaking account data |
+| Unauthenticated socket | Reject protected event |
+
+See [API](api-reference.md), [Security](security.md) and [Testing](testing.md).

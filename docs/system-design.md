@@ -1,55 +1,88 @@
-# 🧩 System design
+# 🧩 System design and engineering decisions
 
 ## Design goals
 
-The current system demonstrates a split frontend/backend architecture. A sound next iteration should make identity, financial state, and failure recovery explicit.
+The prototype demonstrates frontend/backend separation and stateful workflows. A future design must make identity, authorization, data minimization, financial consistency, testability and operations explicit.
 
-| Concern | Current approach | Recommended design direction |
+## Current versus target
+
+| Concern | Current | Target |
 |---|---|---|
-| UI composition | Next.js App Router, React components, CSS Modules | Keep UI concerns isolated from financial rules |
-| API | Express routes in one file | Route/controller, validation, service and repository layers |
-| Identity | Login query returns a random account code in a cookie | Verified server-side session with rotation, expiry and revocation |
-| Passwords | Plaintext plus unsalted SHA-256 digest | Argon2id or bcrypt with unique salts and migration |
-| Card data | Generated PAN-like number and CVV persisted | Never persist CVV; use a compliant tokenization provider for real cards |
-| Balance | Integer field in card-like table | Ledger-backed account balance with currency and exact minor units |
-| Transfer | Multiple independent SQL writes | ACID transaction, idempotency key, locked rows and double-entry ledger |
-| Realtime | Socket.IO handshake code | Authenticate socket using server session and authorize rooms |
-| Schema | Startup CREATE TABLE statements | Versioned migrations and tested rollback |
-| Observability | Console messages | Structured redacted logs, metrics and audit events |
+| UI | Next.js, React, CSS Modules | Keep presentation separate |
+| API | Express routes in one file | Controllers, validators, services, repositories |
+| Authentication | Random-code cookie | Verified server-side session |
+| Passwords | Plaintext plus unsalted SHA-256 | Argon2id/bcrypt with unique salts |
+| Card data | Number-like and CVV-like values persisted | No CVV storage; tokenized reference if needed |
+| Balance | Mutable integer field | Explicit currency and ledger |
+| Transfer | Independent writes | ACID transaction, locking, idempotency |
+| Realtime | Client handshake code | Authenticated socket and authorized rooms |
+| Schema | Startup DDL | Versioned migrations |
+| Quality | No test suite found | Unit, integration, concurrency and E2E |
 
-## Core domain concepts
+## Domain concepts
 
-- **User:** a person represented by a row in the `users` table.
-- **Card-like record:** a row in `visa_info`, containing card-style display data and a balance.
-- **Transfer:** a record in `transfer` after the current code attempts to debit and credit accounts.
-- **Payment request:** a row in `request` with a pending/accepted/rejected status.
+User: profile/login row in users. Card-style record: visual/account metadata in visa_info. Transfer: activity row in transfer. Request: pending/accepted/rejected row in request. These are prototype concepts, not a complete banking domain model.
 
-These names describe the prototype's database. They should not be interpreted as a compliant banking domain model.
+## Transfer invariants
 
-## Transfer invariants for a future safe design
+1. Actor is authenticated.
+2. Source belongs to actor.
+3. Recipient is valid.
+4. Amount is positive and uses a defined minor currency unit.
+5. Currency compatibility is checked.
+6. Funds are checked under row locks.
+7. Idempotency prevents duplicate execution.
+8. Debit and credit ledger entries balance.
+9. Transfer and ledger records commit together.
+10. Any failure rolls back all writes.
+11. Audit metadata excludes secrets.
+12. Notifications publish only after commit.
 
-A transfer service should enforce all of the following in one transaction:
+## Request lifecycle
 
-1. The authenticated actor owns the source account.
-2. The recipient is eligible to receive the transfer.
-3. The amount is a positive integer in the smallest supported currency unit.
-4. The sender has sufficient available funds.
-5. A request idempotency key has not already been processed.
-6. Debit and credit ledger entries balance exactly.
-7. The transfer record and ledger entries commit together.
-8. Failure at any intermediate step rolls back all writes.
-9. An audit record is written without exposing secrets.
-10. Notifications are published only after commit, preferably through an outbox.
+~~~mermaid
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Accepted: authorized accept
+    Pending --> Rejected: authorized reject
+    Pending --> Expired: expiry policy
+    Accepted --> [*]
+    Rejected --> [*]
+    Expired --> [*]
+~~~
+
+The current implementation uses pending, accepted and rejected strings. Expiry and transition locking are not visible.
 
 ## Failure model
 
-Expected failures include invalid input, unknown recipient, unauthenticated caller, authorization denial, insufficient balance, duplicate submission, database outage, deadlock, socket disconnect, and client timeout after a successful commit. The client must not blindly retry a monetary operation without an idempotency key.
+Design for malformed input, unauthenticated calls, cross-account access, unknown recipients, invalid amounts, insufficient funds, duplicate submissions, concurrent spending, DB failure, deadlocks, client timeout after commit, socket disconnect and duplicate events.
 
-## Non-functional requirements for future work
+## Recommended API error envelope
 
-- Security: least privilege, server-side identity, secret hygiene and data minimization.
-- Reliability: atomic transfer operations and tested recovery.
-- Maintainability: small modules, migrations and contract tests.
-- Accessibility: semantic controls, keyboard navigation and understandable errors.
-- Observability: correlation identifiers and redacted structured logs.
-- Performance: indexed lookups and bounded history queries.
+~~~json
+{
+  "success": false,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "The request could not be processed.",
+    "requestId": "synthetic-request-id"
+  }
+}
+~~~
+
+Never return raw DB errors, stack traces, password hashes, session identifiers or card security values.
+
+## Non-functional requirements
+
+| Attribute | Requirement |
+|---|---|
+| Security | Authentication, authorization, validation and secret hygiene |
+| Integrity | Atomic writes and explicit invariants |
+| Reliability | Predictable rollback/retry |
+| Maintainability | Small modules and documented contracts |
+| Accessibility | Keyboard and assistive-technology support |
+| Performance | Measured query and UI performance |
+| Observability | Redacted logs and actionable metrics |
+| Portability | Reproducible installs and environment config |
+
+See [ADRs](adr/README.md). Proposed controls are not implemented until code and tests exist.

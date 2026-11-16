@@ -1,0 +1,10 @@
+flowchart LR
+    User[Browser user] --> UI[1.0 Frontend]
+    UI -->|HTTP and cookies| API[2.0 Express routes]
+    API --> Users[(Users)]
+    API --> Cards[(Card-style data)]
+    API --> Transfers[(Transfers)]
+    API --> Requests[(Requests)]
+    API -->|JSON| UI
+    API --> Socket[3.0 Socket.IO]
+    Socket --> User

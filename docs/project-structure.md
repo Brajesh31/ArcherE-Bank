@@ -1,87 +1,91 @@
-# 📁 Project structure
+# 📂 Project structure and file guide
 
-This guide explains the main checked-in paths in the repository. Files are described according to their current location. It is not a proposal to rearrange the application.
+This guide documents actual paths and distinguishes them from a recommended future structure.
 
-## Root-level files
+## Root files
 
 | Path | Purpose |
 |---|---|
-| `package.json` | Frontend package metadata and Next.js scripts/dependencies |
-| `package-lock.json` | npm dependency lockfile for the root application |
-| `tsconfig.json` | TypeScript compiler settings |
-| `next.config.ts` | Next.js configuration |
-| `next-env.d.ts` | Next.js TypeScript declarations |
-| `eslint.config.mjs` | ESLint configuration |
-| `.env.example` | Example local environment values |
-| `.editorconfig` | Editor formatting defaults |
-| `.gitattributes` | Git attribute settings |
-| `.gitignore` | Ignored local/generated files |
-| `README.md` | Project landing page and setup summary |
-| `LICENSE` | Repository license |
-| `CHANGELOG.md` | Release/change history |
-| `CITATION.cff` | Citation metadata |
-| `CODEOWNERS` | Ownership mapping |
-| `CONTRIBUTING.md` | Contribution guidance |
-| `SECURITY.md` | Vulnerability and security policy |
-| `SUPPORT.md` | Support guidance |
-| `ROADMAP.md` | Planned engineering work |
+| package.json / package-lock.json | Frontend dependencies and locked graph |
+| tsconfig.json | TypeScript compiler settings |
+| next.config.ts | Next.js configuration |
+| next-env.d.ts | Next.js type declarations |
+| eslint.config.mjs | ESLint configuration |
+| .env.example | Example environment values |
+| .editorconfig | Editor defaults |
+| .gitattributes | Git text/binary attributes |
+| .gitignore | Ignored local/build files |
+| README.md | Project entry point |
+| LICENSE | MIT license |
+| CITATION.cff | Citation metadata |
+| CODEOWNERS | Review ownership |
+| CHANGELOG.md | Notable changes |
+| ROADMAP.md | Planned work |
+| SECURITY.md | Vulnerability reporting |
+| CONTRIBUTING.md | Contribution workflow |
+| SUPPORT.md | Help guidance |
 
-## GitHub configuration
+## GitHub: .github/
 
-- `.github/PULL_REQUEST_TEMPLATE.md`: pull request checklist.
-- `.github/workflows/update-readme.yml`: existing README timestamp automation.
-- `.github/ISSUE_TEMPLATE/`: structured bug, feature and documentation issue forms.
-- `.github/workflows/`: continuous integration and documentation checks.
+ISSUE_TEMPLATE/ contains structured bug, feature and documentation reports. workflows/ contains CI, docs validation and dependency checks. PULL_REQUEST_TEMPLATE.md contains review checklist. Existing update-readme.yml is retained because it may update README content automatically.
 
-## Frontend: `app/`
+## Frontend: app/
 
-### Public pages and shared UI
+Account routes are under app/account/, including loginform.tsx and registration formregister.tsx. Shared components are header.tsx, footer.tsx, about.tsx and visa.tsx under app/components/. Shared styles live under app/css/.
 
-- `app/page.tsx`: root page.
-- `app/layout.tsx`: root layout.
-- `app/components/about.tsx`: About section.
-- `app/components/header.tsx`: header/navigation.
-- `app/components/footer.tsx`: footer.
-- `app/components/visa.tsx`: card-related public component.
-- `app/css/`: CSS modules for these shared components.
+Dashboard composition is app/dashboard/page.tsx. Feature components include content.tsx, transfer.tsx, request.tsx, trades.tsx and visaart.tsx under app/dashboard/components/. Dashboard styles live under app/dashboard/css/.
 
-### Account experience
+## Public assets
 
-- `app/account/page.tsx`: account route.
-- `app/account/components/loginform.tsx`: login form.
-- `app/account/css/loginform.module.css`: login form styles.
-- `app/account/register/page.tsx`: registration route.
-- `app/account/register/components/formregister.tsx`: registration form.
-- `app/account/register/css/`: registration and card styles.
+| Directory | Purpose |
+|---|---|
+| public/banar/ | Existing banner artwork |
+| public/logo/ | Existing logo artwork |
+| public/visa_card/ | Existing card visuals |
+| public/visa_card_temblete/ | Existing card templates |
 
-### Dashboard experience
+Existing spellings are preserved to avoid breaking asset references.
 
-- `app/dashboard/page.tsx`: dashboard route and page-level composition.
-- `app/dashboard/components/content.tsx`: dashboard content.
-- `app/dashboard/components/request.tsx`: request UI.
-- `app/dashboard/components/transfer.tsx`: transfer UI.
-- `app/dashboard/components/trades.tsx`: activity/trade UI.
-- `app/dashboard/components/visaart.tsx`: card visual component.
-- `app/dashboard/css/`: dashboard CSS modules.
+## Backend: server/
 
-## Static assets: `public/`
+| File | Purpose |
+|---|---|
+| server/server.js | Express routes, Socket.IO, startup DDL and listener |
+| server/db.js | MySQL connection |
+| server/package.json | Backend dependencies/start script |
+| server/package-lock.json | Locked backend dependencies |
 
-- `public/banar/`: existing banner artwork (directory spelling is retained).
-- `public/logo/`: logo artwork.
-- `public/visa_card/`: card illustrations.
-- `public/visa_card_temblete/`: card template artwork (directory spelling is retained).
+The original backend does not contain dedicated route, controller, service, repository, migration or test directories.
 
-Keep original paths stable unless a separate code migration is explicitly approved. Image references in Next.js should use the actual public path and be tested in the browser.
+## Documentation additions
 
-## Backend: `server/`
+~~~text
+docs/
+├── adr/          # Architecture decision records
+├── diagrams/     # Mermaid sources
+├── runbooks/     # Operational procedures
+└── *.md          # Engineering guides
+~~~
 
-- `server/server.js`: Express routes, Socket.IO handlers, table definitions and listener.
-- `server/db.js`: MySQL connection.
-- `server/package.json`: backend dependency manifest and start script.
-- `server/package-lock.json`: backend lockfile.
+## Naming conventions
 
-The server currently does not have a distinct routes, services, repositories, migrations, or tests directory. Those are recommended future engineering boundaries, not existing files.
+React components use TSX. CSS Modules use .module.css. Backend JavaScript currently uses CommonJS require. Docs use lowercase kebab-case Markdown. Mermaid files use .mmd. Workflows use descriptive kebab-case YAML names.
 
-## Documentation: `docs/`
+## Recommended future backend structure
 
-See [documentation index](README.md). Detailed diagrams are stored under `docs/diagrams/`; architecture decision records are stored under `docs/adr/`.
+~~~text
+server/src/
+├── config/
+├── middleware/
+├── routes/
+├── controllers/
+├── validators/
+├── services/
+├── repositories/
+├── sockets/
+└── utils/
+server/migrations/
+server/tests/
+~~~
+
+This is a proposal, not current source. Introduce it incrementally with tests and migration planning.

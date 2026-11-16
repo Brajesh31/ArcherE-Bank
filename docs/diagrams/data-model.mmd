@@ -1,0 +1,31 @@
+erDiagram
+    USERS ||--|| VISA_INFO : shared_random_code
+    VISA_INFO ||--o{ TRANSFER : sender
+    VISA_INFO ||--o{ TRANSFER : recipient
+    VISA_INFO ||--o{ REQUEST : participant
+    USERS {
+      int id PK
+      string name
+      string nationalID
+      string random_code
+    }
+    VISA_INFO {
+      int id PK
+      string visa_number
+      string visa_cvv
+      int balance
+      string random_code
+    }
+    TRANSFER {
+      int id PK
+      int amount
+      string random_from_code
+      string random_to_code
+    }
+    REQUEST {
+      int id PK
+      int amount
+      string status
+      string from_user
+      string to_user
+    }

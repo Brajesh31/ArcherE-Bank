@@ -1,0 +1,9 @@
+flowchart TD
+    A([Push or pull request]) --> B[Checkout]
+    B --> C[Install locked dependencies]
+    C --> D[Frontend lint]
+    D --> E[Frontend build]
+    E --> F[Backend syntax check]
+    F --> G[Markdown link validation]
+    G --> H[Dependency audit]
+    H --> I([Workflow status])

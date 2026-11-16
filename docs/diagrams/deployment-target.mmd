@@ -1,0 +1,8 @@
+flowchart TB
+    User([User]) --> Edge[HTTPS reverse proxy]
+    Edge --> Frontend[Next.js hosting]
+    Edge --> API[Express API]
+    API -->|Private network| DB[(Managed MySQL)]
+    API --> Socket[Authenticated Socket.IO]
+    API --> Logs[Redacted logs and metrics]
+    DB --> Backup[Encrypted backups]

@@ -1,47 +1,61 @@
-# 📚 ArcherE-Bank Documentation
+# 📚 ArcherE-Bank Documentation Hub
 
-This directory contains the technical reference for the ArcherE-Bank learning prototype. The documents are organized around the code that exists in the repository and clearly distinguish current behavior from proposed improvements.
+This is the engineering handbook for the repository. It helps contributors discover, install, understand, verify and safely evolve the prototype.
 
-## Reading paths
+> [!IMPORTANT]
+> These guides distinguish current source behavior from recommended future architecture. They do not certify the application as secure or production-ready.
 
-### New developer
-1. [Project overview](project-overview.md)
-2. [Installation](installation.md)
-3. [Configuration](configuration.md)
-4. [Project structure](project-structure.md)
-5. [Development guide](development.md)
+## 🧭 Reading paths
 
-### Understanding the implementation
-1. [Architecture](architecture.md)
-2. [System design](system-design.md)
-3. [Workflow](workflow.md)
-4. [Data flow](data-flow.md)
-5. [Feature catalogue](features.md)
-6. [API reference](api.md)
-7. [Database model](database.md)
+**New contributor:** [Overview](project-overview.md) → [Structure](project-structure.md) → [Installation](installation.md) → [Configuration](configuration.md) → [Usage](usage.md) → [Development](development.md)
 
-### Quality and operations
-1. [Testing strategy](testing.md)
-2. [Security review](security-review.md)
-3. [Deployment](deployment.md)
-4. [Performance](performance.md)
-5. [Accessibility](accessibility.md)
-6. [Troubleshooting](troubleshooting.md)
+**Understand the system:** [Architecture](architecture.md) → [System design](system-design.md) → [Modules](modules.md) → [Components](components.md) → [Workflow](workflow.md) → [Data flow](data-flow.md) → [Database](database.md) → [API](api-reference.md)
 
-### Planning and reference
-- [Limitations](limitations.md)
-- [Future scope](future-scope.md)
-- [FAQ](faq.md)
-- [Glossary](glossary.md)
-- [References](references.md)
-- [Architecture decision records](adr/README.md)
-- [Diagram source index](diagrams/README.md)
+**Quality and risk:** [Security](security.md) · [Testing](testing.md) · [Accessibility](accessibility.md) · [Performance](performance.md) · [Limitations](limitations.md)
 
-## Documentation conventions
+**Operations:** [Deployment](deployment.md) · [Troubleshooting](troubleshooting.md) · [Local runbook](runbooks/local-development.md) · [Incident response](runbooks/incident-response.md) · [Backup/recovery](runbooks/backup-recovery.md)
 
-- **Implemented:** directly evidenced in the current source.
-- **Observed risk:** a weakness visible in the current code.
-- **Recommended:** a proposed change, not a claim that it already exists.
-- **Unverified:** requires local execution, test evidence, or an owner decision.
+## 📖 Catalogue
 
-Security-sensitive behavior is described conservatively. A documented endpoint is not necessarily safe to expose. See the repository [Security Policy](../SECURITY.md).
+| Document | Contents |
+|---|---|
+| [Project overview](project-overview.md) | Background, goals, scope and success criteria |
+| [Architecture](architecture.md) | Runtime components, trust boundaries and diagrams |
+| [System design](system-design.md) | Domain responsibilities and target design |
+| [Project structure](project-structure.md) | Actual repository paths and file purpose |
+| [Workflow](workflow.md) | Registration, login, transfer and request flows |
+| [Data flow](data-flow.md) | Data inventory and trust boundaries |
+| [Features](features.md) | Feature-by-feature implementation status |
+| [Installation](installation.md) | Reproducible local setup |
+| [Configuration](configuration.md) | Environment, ports and CORS |
+| [Usage](usage.md) | Safe synthetic walkthrough |
+| [API reference](api-reference.md) | HTTP routes, payloads and events |
+| [Database](database.md) | Tables, fields and integrity concerns |
+| [Modules](modules.md) | Frontend/backend module responsibilities |
+| [Components](components.md) | UI component inventory |
+| [Development](development.md) | Daily engineering workflow |
+| [Testing](testing.md) | Verification layers and critical cases |
+| [Deployment](deployment.md) | Release gates and topology proposal |
+| [Security](security.md) | Static findings and remediation |
+| [Performance](performance.md) | Metrics and profiling strategy |
+| [Accessibility](accessibility.md) | Manual and automated review |
+| [Troubleshooting](troubleshooting.md) | Symptoms and safe diagnostics |
+| [FAQ](faq.md) | Common questions |
+| [Limitations](limitations.md) | Known and unverified gaps |
+| [Future scope](future-scope.md) | Prioritized evolution |
+| [Glossary](glossary.md) | Domain terminology |
+| [References](references.md) | Official technical resources |
+
+## 🗺️ Diagrams, decisions and runbooks
+
+- [Diagram index](diagrams/README.md): editable Mermaid sources.
+- [ADR index](adr/README.md): architecture decisions.
+- [Local development](runbooks/local-development.md): startup and shutdown.
+- [Incident response](runbooks/incident-response.md): secret, data and integrity incidents.
+- [Backup and recovery](runbooks/backup-recovery.md): recovery planning and restore checks.
+
+## ✍️ Documentation conventions
+
+**Implemented** means evidenced in source. **Observed risk** means a weakness visible in inspected code. **Recommended** means proposed, not implemented. **Unverified** means runtime, test or deployment evidence is still required.
+
+Examples use synthetic values. Diagrams must match code. Never include credentials, tokens, identity information, card details or real financial records. File count alone is not a quality metric.

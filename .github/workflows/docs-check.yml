@@ -1,0 +1,55 @@
+name: Documentation checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  markdown-links:
+    name: Validate local Markdown references
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check local Markdown links and images
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+          root = Path(".").resolve()
+          errors = []
+          pattern = re.compile(r"!??\[[^\]]*\]\(([^)]+)\)")
+          for doc in root.rglob("*.md"):
+              if ".git" in doc.parts:
+                  continue
+              content = doc.read_text(encoding="utf-8")
+              for raw in pattern.findall(content):
+                  target = raw.strip().split("#", 1)[0]
+                  if not target or re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*:", target):
+                      continue
+                  candidate = (doc.parent / target).resolve()
+                  try:
+                      candidate.relative_to(root)
+                  except ValueError:
+                      errors.append(f"{doc}: path escapes repository: {target}")
+                      continue
+                  if not candidate.exists():
+                      errors.append(f"{doc}: missing local target: {target}")
+          if errors:
+              print("\n".join(errors))
+              sys.exit(1)
+          print("All local Markdown links and image paths exist.")
+          PY
+      - name: Require core docs
+        run: |
+          test -s README.md
+          test -s docs/README.md
+          test -s docs/security.md
+          test -s CONTRIBUTING.md
+          test -s SECURITY.md

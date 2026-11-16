@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔐 Report a security vulnerability
+    url: https://github.com/Brajesh31/ArcherE-Bank/blob/main/SECURITY.md
+    about: Follow private reporting guidance. Do not publish exploit details or sensitive data.
+  - name: 📚 Read project documentation
+    url: https://github.com/Brajesh31/ArcherE-Bank/tree/main/docs
+    about: Review installation, architecture, API and security guides.

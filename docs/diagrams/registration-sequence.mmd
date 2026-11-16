@@ -1,0 +1,13 @@
+sequenceDiagram
+    actor User
+    participant UI as Registration form
+    participant API as Express
+    participant DB as MySQL
+    User->>UI: Enter synthetic values
+    UI->>API: POST /register
+    API->>API: Generate demo values
+    API->>DB: INSERT users
+    DB-->>API: Insert result
+    API->>DB: INSERT visa_info
+    DB-->>API: Insert result
+    API-->>UI: Response

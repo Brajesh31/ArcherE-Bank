@@ -1,38 +1,32 @@
-# ⚡ Performance considerations
+# ⚡ Performance and scalability
 
-## Current architecture factors
+The repository contains a Next.js frontend, Express API, Socket.IO and MySQL connection. Dashboard update logic queries transfer history and balance. No benchmark results are claimed.
 
-The current frontend is a Next.js application and the backend uses Express with a MySQL connection exported as a single connection object. Some dashboard operations query transfer rows and balance data before emitting updates.
+## Metrics
 
-## Areas to measure
+| Area | Metric | Purpose |
+|---|---|---|
+| Frontend | Initial load, route transition, JS bundle | Perceived responsiveness |
+| API | p50/p95/p99 latency, throughput, error rate | Tail latency and capacity |
+| Database | Query latency, slow queries, lock waits | Persistence bottlenecks |
+| Transfers | Transaction duration and retry count | Integrity under concurrency |
+| Realtime | Active sockets and event fan-out | Delivery load |
+| History | Row count and payload size | Pagination need |
 
-- Frontend route load and client-side interaction latency.
-- API response time by endpoint and database query.
-- Database connection saturation and slow queries.
-- Transfer and request contention under concurrent activity.
-- Socket connection count and event fan-out.
-- Bundle size and static asset weight.
-- Dashboard history volume and payload size.
+## Database guidance
 
-No performance benchmark results are included because the project has not been benchmarked as part of this documentation update.
+Inspect query plans before adding indexes. Account lookup and sender/recipient history fields may need indexes after data cleanup. Paginate activity, select only necessary fields, never select password/CVV values for presentation, and consider a connection pool in a future refactor. Do not cache balances casually.
 
-## Query and data recommendations
+## Frontend guidance
 
-- Add indexes based on observed query plans, especially account lookup columns and transfer relationship columns.
-- Paginate activity history instead of loading an unbounded account history.
-- Select only fields needed by the page.
-- Avoid returning sensitive values in any response.
-- Use a connection pool appropriate to the deployment and workload.
-- Measure before introducing caching; account balances and transfer state require strong consistency.
+Use responsive image delivery, avoid unnecessary client JavaScript, split large features when measurement justifies it, provide loading states, avoid unbounded activity history and respect reduced-motion preferences.
 
-## Frontend recommendations
+## Socket guidance
 
-- Keep client components limited to interactive regions.
-- Optimize large artwork and use responsive image delivery.
-- Avoid unnecessary repeated network requests.
-- Show loading, empty, error and stale states explicitly.
-- Test mobile rendering and performance with representative devices.
+Authenticate sockets, scope events to server-authorized rooms, bound payload size, handle reconnect and duplicate events safely, and publish only after committed state.
 
 ## Benchmark protocol
 
-A future benchmark should document the machine, runtime, database size, dataset shape, request mix, concurrency, warm-up period, measurement window, p50/p95/p99 latency, throughput, error rate and resource use. Do not publish numbers without reproducible evidence.
+Record commit, runtime, OS, DB version, hardware, dataset size, request mix, concurrency, warm-up, duration, p50/p95/p99, throughput, error rate and resource usage. Do not publish unsupported speed/capacity claims.
+
+Measure first. Never trade authorization or financial consistency for speed.

@@ -1,0 +1,46 @@
+name: "🐛 Bug report"
+description: Report a reproducible defect using synthetic data
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Never include credentials, cookies, identity records, card details, CVVs or database dumps. Use synthetic values only."
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: What is broken and where?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include route, environment and synthetic values.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: OS, Node.js, npm, browser, MySQL version
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety confirmation
+      options:
+        - label: I removed secrets and personal/payment data from this report.
+          required: true
